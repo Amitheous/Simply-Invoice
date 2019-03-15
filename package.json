@@ -1,6 +1,6 @@
 {
-  "name": "simply-invoice",
-  "version": "1.0.0",
+  "name": "Simply-Invoice",
+  "version": "0.9.0",
   "description": "An application for managing clients, bills, and invoices",
   "main": "server.js",
   "scripts": {

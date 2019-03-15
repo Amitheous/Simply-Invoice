@@ -1,6 +1,6 @@
 {
-  "name": "wallet-app",
-  "version": "0.1.0",
+  "name": "Simply-Invoice",
+  "version": "0.9.0",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
