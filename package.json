@@ -1,0 +1,29 @@
+{
+  "name": "simply-invoice",
+  "version": "1.0.0",
+  "description": "An application for managing clients, bills, and invoices",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "author": "Matthew Kartchner (mkartch12@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.6",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "prop-types": "^15.6.2",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
