@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { getInvoice, deleteInvoice } from "../../../actions/invoiceActions";
+import { getInvoice, deleteInvoice } from "../../../actions/formActions";
 import { connect } from "react-redux";
 import moment from "moment";
 

@@ -1,11 +1,16 @@
 import {
-  GET_BILLS,
+  GET_INVOICES,
+  GET_INVOICE,
   GET_BILL,
-  BILL_LOADING,
-  DELETE_BILL
+  GET_BILLS,
+  DELETE_BILL,
+  FORM_LOADING,
+  DELETE_INVOICE
 } from "../actions/types";
 
 const initialState = {
+  invoice: null,
+  invoices: null,
   bill: null,
   bills: null,
   loading: false
@@ -13,10 +18,29 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case BILL_LOADING:
+    case FORM_LOADING:
       return {
         ...state,
         loading: true
+      };
+    case GET_INVOICES:
+      return {
+        ...state,
+        invoices: action.payload,
+        loading: false
+      };
+    case GET_INVOICE:
+      return {
+        ...state,
+        invoice: action.payload,
+        loading: false
+      };
+    case DELETE_INVOICE:
+      return {
+        ...state,
+        invoices: state.invoices.filter(
+          invoice => invoice._id !== action.payload
+        )
       };
     case GET_BILLS:
       return {

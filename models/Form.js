@@ -36,12 +36,17 @@ const FormSchema = new Schema({
     trim: true
   },
   date: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   dueDate: {
+    type: Date
+  },
+  datePaid: {
+    type: Date
+  },
+  createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   from: {
     organizationName: {

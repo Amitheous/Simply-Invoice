@@ -13,7 +13,7 @@ import {
   PaginationLink
 } from "reactstrap";
 
-import { getInvoices } from "../../actions/invoiceActions";
+import { getInvoices } from "../../actions/formActions";
 
 class Invoices extends Component {
   constructor() {
@@ -30,7 +30,7 @@ class Invoices extends Component {
   }
 
   render() {
-    const { invoices, loading } = this.props.invoice;
+    const { invoices, loading } = this.props.form;
     let renderPageNumbers;
     let invoiceItems;
     let isLoading;
@@ -114,7 +114,7 @@ Invoices.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  invoice: state.invoice
+  form: state.form
 });
 
 export default connect(

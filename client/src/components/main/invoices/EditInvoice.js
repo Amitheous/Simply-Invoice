@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 
 import { getClients } from "../../../actions/clientActions";
-import { editInvoice, clearInvoice } from "../../../actions/invoiceActions";
+import { editInvoice, clearInvoice } from "../../../actions/formActions";
 import { SelectClient } from "../formSections/SelectClient";
 
 import {
@@ -89,7 +89,7 @@ class EditInvoice extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { invoice } = nextProps.invoice;
+    const { invoice } = nextProps.form;
     if (invoice) {
       this.setState({
         title: invoice.title,
@@ -601,7 +601,7 @@ class EditInvoice extends Component {
       from: this.state.from,
       to: this.state.to,
       items: this.state.items,
-      tax: this.state.tax,
+      tax: Number(this.state.tax.toFixed(4)),
       subtotal: this.state.subtotal,
       total: this.state.total
     };
@@ -622,7 +622,7 @@ EditInvoice.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  invoice: state.invoice,
+  form: state.form,
   client: state.client,
   profile: state.profile,
   errors: state.errors

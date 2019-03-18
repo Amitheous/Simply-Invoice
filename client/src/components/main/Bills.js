@@ -13,7 +13,7 @@ import {
   PaginationLink
 } from "reactstrap";
 
-import { getBills } from "../../actions/billActions";
+import { getBills } from "../../actions/formActions";
 
 class Bills extends Component {
   constructor() {
@@ -30,7 +30,7 @@ class Bills extends Component {
   }
 
   render() {
-    const { bills, loading } = this.props.bill;
+    const { bills, loading } = this.props.form;
     let renderPageNumbers;
     let billItems;
     let isLoading;
@@ -112,7 +112,7 @@ Bills.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  bill: state.bill
+  form: state.form
 });
 
 export default connect(

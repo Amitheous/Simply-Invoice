@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createBill } from "../../../actions/billActions";
+import { createBill } from "../../../actions/formActions";
 import { getProfile } from "../../../actions/profileActions";
 import PropTypes from "prop-types";
 
@@ -65,8 +65,8 @@ class CreateBill extends Component {
           state: "",
           zipCode: ""
         },
-        email: "email@test.com",
-        phone: "123-456-7890"
+        email: "",
+        phone: ""
       },
       items: [],
       itemDescription: "",
@@ -350,7 +350,7 @@ class CreateBill extends Component {
       from: this.state.from,
       to: this.state.to,
       items: this.state.items,
-      tax: this.state.tax,
+      tax: Number(this.state.tax.toFixed(4)),
       subtotal: this.state.subtotal,
       total: this.state.total
     };
@@ -584,7 +584,7 @@ CreateBill.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  bill: state.bill,
+  form: state.form,
   profile: state.profile,
   errors: state.errors
 });

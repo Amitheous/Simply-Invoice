@@ -12,17 +12,19 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { getRecentInvoices, getInvoice } from "../../actions/invoiceActions";
-import { getRecentBills, getBill } from "../../actions/billActions";
+import { getRecentInvoices, getInvoice } from "../../actions/formActions";
+import { getRecentBills, getBill } from "../../actions/formActions";
 import { getProfile } from "../../actions/profileActions";
 import { RecentInvoiceItem } from "./dashboard/RecentInvoiceItem";
 import { RecentBillItem } from "./dashboard/RecentBillItem";
+
+import DoubleBar from "./dashboard/DoubleBar";
 
 class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      days: 30
+      days: 60
     };
   }
   componentWillMount() {
@@ -33,14 +35,13 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { invoices, loading } = this.props.invoice;
-    const { bills } = this.props.bill;
+    const { loading, invoices, bills } = this.props.form;
     const { profile } = this.props;
-    const billLoading = this.props.bill.loading;
     let recentInvoiceItems;
     let recentBillItems;
     let profileButton;
     let isLoading;
+    console.log(this.props);
     // Create Invoice Items
     if (invoices === null || loading) {
       isLoading = (
@@ -72,7 +73,7 @@ class Dashboard extends Component {
     }
 
     // Create Bill Items
-    if (bills === null || billLoading) {
+    if (bills === null || loading) {
       isLoading = (
         <div>
           <h4>Loading...</h4>
@@ -192,6 +193,12 @@ class Dashboard extends Component {
               </Card>
             </div>
           </Row>
+          <Row className="justify-content-center">
+            <Card className="col-sm-10">
+              <CardTitle>Charts</CardTitle>
+              <DoubleBar />
+            </Card>
+          </Row>
         </Container>
       </div>
     );
@@ -214,12 +221,17 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  invoice: state.invoice,
-  bill: state.bill,
+  form: state.form,
   profile: state.profile
 });
 
 export default connect(
   mapStateToProps,
-  { getRecentInvoices, getRecentBills, getInvoice, getBill, getProfile }
+  {
+    getRecentInvoices,
+    getRecentBills,
+    getInvoice,
+    getBill,
+    getProfile
+  }
 )(Dashboard);

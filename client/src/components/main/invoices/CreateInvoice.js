@@ -21,7 +21,7 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { createInvoice } from "../../../actions/invoiceActions";
+import { createInvoice } from "../../../actions/formActions";
 import { getClients } from "../../../actions/clientActions";
 import { getProfile } from "../../../actions/profileActions";
 import { TopArea } from "../formSections/TopArea";
@@ -483,7 +483,7 @@ class CreateInvoice extends Component {
       from: this.state.from,
       to: this.state.to,
       items: this.state.items,
-      tax: this.state.tax,
+      tax: Number(this.state.tax.toFixed(4)),
       subtotal: this.state.subtotal,
       total: this.state.total
     };
@@ -627,7 +627,7 @@ CreateInvoice.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  invoice: state.invoice,
+  form: state.form,
   profile: state.profile,
   client: state.client,
   errors: state.errors

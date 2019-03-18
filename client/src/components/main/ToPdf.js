@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { clearBill } from "../../actions/billActions";
-import { clearInvoice } from "../../actions/invoiceActions";
+
+import { clearBill, clearInvoice } from "../../actions/formActions";
 import moment from "moment";
 
 import jsPDF from "jspdf";
@@ -18,11 +18,11 @@ class ToPdf extends Component {
   componentWillReceiveProps(nextProps) {
     const doc = new jsPDF();
     let form;
-    if (nextProps.invoice.invoice) {
-      form = nextProps.invoice.invoice;
+    if (nextProps.form.invoice) {
+      form = nextProps.form.invoice;
     }
-    if (nextProps.bill.bill) {
-      form = nextProps.bill.bill;
+    if (nextProps.form.bill) {
+      form = nextProps.form.bill;
     }
     doc.setFont("Helvetica", "");
     doc.setFontSize(24);
@@ -109,16 +109,21 @@ class ToPdf extends Component {
       i++;
     });
     y = i * 19;
-    doc.setFontSize(14);
-    doc.text(["Subtotal:", "Tax:", "Total:"], 150, 108 + y, {
-      align: "right",
-      lineHeightFactor: 1.5
-    });
+    doc.setFontSize(12);
+    doc.text(
+      ["Subtotal:", `Tax (${(form.tax * 100).toFixed(2)}%):`, "Total:"],
+      150,
+      108 + y,
+      {
+        align: "right",
+        lineHeightFactor: 1.5
+      }
+    );
     doc.setFontSize(12);
     doc.text(
       [
         "$" + form.subtotal.toFixed(2),
-        String(form.tax * 100) + "%",
+        "$" + (form.total - form.subtotal).toFixed(2),
         "$" + form.total.toFixed(2)
       ],
       185,
@@ -166,8 +171,7 @@ ToPdf.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  bill: state.bill,
-  invoice: state.invoice
+  form: state.form
 });
 
 export default connect(

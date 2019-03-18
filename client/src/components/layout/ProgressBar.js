@@ -6,8 +6,7 @@ class ProgressBar extends Component {
   render() {
     // NProgress.configure({ parent: "#main" });
     if (
-      this.props.bill.loading ||
-      this.props.invoice.loading ||
+      this.props.form.loading ||
       this.props.client.loading ||
       this.props.profile.loading
     ) {
@@ -22,8 +21,7 @@ class ProgressBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  invoice: state.invoice,
-  bill: state.bill,
+  form: state.form,
   client: state.client,
   profile: state.profile
 });

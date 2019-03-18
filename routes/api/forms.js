@@ -23,6 +23,12 @@ router.post(
       return res.status(400).json(errors);
     }
 
+    let dateOfPay;
+    if (req.body.status === "paid") {
+      dateOfPay = req.body.date;
+    } else {
+      dateOfPay = null;
+    }
     const newForm = new Form({
       user: req.user.id,
       formType: req.body.formType.toLowerCase(),
@@ -32,6 +38,7 @@ router.post(
       description: req.body.description,
       formNumber: req.body.formNumber,
       status: req.body.status,
+      datePaid: dateOfPay,
       referenceNumber: req.body.referenceNumber,
       from: req.body.from,
       to: req.body.to,
@@ -158,7 +165,7 @@ router.get(
 );
 
 // @route   POST api/forms/:id
-// @desc    Update Invoice
+// @desc    Update Invoices and Bills
 router.post(
   "/:id",
   passport.authenticate("jwt", { session: false }),
@@ -168,15 +175,18 @@ router.post(
       .then(form => {
         if (String(req.user.id) !== String(form.user)) {
           return res.status(401).json({
-            noauth: "Not authorized",
-            user_id: req.user.id,
-            form_id: form.user
+            noAuth: "Not authorized"
           });
         } else {
           //  Only update the fields that are submitting values.
           // Remember on the front end if they delete a field it will be replaced with "" an empty string
 
           let updatedData = {};
+
+          if (form.status === "unpaid" && req.body.status === "paid") {
+            const dateOfPay = Date.now().toISOString();
+            updatedData.datePaid = dateOfPay;
+          }
 
           if (req.body.title) updatedData.title = req.body.title;
           if (req.body.formType) updatedData.formType = req.body.formType;

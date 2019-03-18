@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { editBill, clearBill } from "../../../actions/billActions";
+import { editBill, clearBill } from "../../../actions/formActions";
 import moment from "moment";
 
 import {
@@ -80,7 +80,7 @@ class EditBill extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { bill } = nextProps.bill;
+    const { bill } = nextProps.form;
     if (bill) {
       this.setState({
         title: bill.title,
@@ -542,7 +542,7 @@ class EditBill extends Component {
       from: this.state.from,
       to: this.state.to,
       items: this.state.items,
-      tax: this.state.tax,
+      tax: Number(this.state.tax.toFixed(4)),
       subtotal: this.state.subtotal,
       total: this.state.total
     };
@@ -559,7 +559,7 @@ EditBill.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  bill: state.bill,
+  form: state.form,
   profile: state.profile,
   errors: state.errors
 });
