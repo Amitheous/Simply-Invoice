@@ -14,7 +14,7 @@ class DoubleBar extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.form.forms) {
-      console.log(nextProps);
+      // console.log(nextProps);
     }
     // const invoices = nextProps.form.forms.filter(
     //   form => form.formType === "invoice"
