@@ -91,6 +91,11 @@ class EditInvoice extends Component {
   componentWillReceiveProps(nextProps) {
     const { invoice } = nextProps.form;
     if (invoice) {
+      if (invoice.status === "paid") {
+        this.setState({
+          paid: true
+        });
+      }
       this.setState({
         title: invoice.title,
         formId: invoice._id,
@@ -391,6 +396,15 @@ class EditInvoice extends Component {
   }
   handleCheck = e => {
     this.setState({ paid: !this.state.paid });
+    if (!this.state.paid === true) {
+      this.setState({
+        status: "paid"
+      });
+    } else if (!this.state.paid === false) {
+      this.setState({
+        status: "unpaid"
+      });
+    }
   };
 
   // For keeping info in fields and component state equal
@@ -588,13 +602,12 @@ class EditInvoice extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-
     const newInvoiceData = {
       title: this.state.title,
       formType: "invoice",
       description: this.state.description,
       formNumber: this.state.formNumber,
-      status: this.state.paid ? "paid" : "unpaid",
+      status: this.state.status,
       referenceNumber: this.state.referenceNumber,
       date: this.state.date,
       dueDate: this.state.dueDate,
@@ -605,6 +618,8 @@ class EditInvoice extends Component {
       subtotal: this.state.subtotal,
       total: this.state.total
     };
+
+    console.log(newInvoiceData);
 
     this.props.editInvoice(
       this.state.formId,

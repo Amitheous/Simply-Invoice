@@ -7,13 +7,33 @@ import {
   GET_INVOICE,
   GET_INVOICES,
   DELETE_INVOICE,
-  GET_ERRORS
+  GET_ERRORS,
+  GET_FORMS
 } from "./types";
 
 export const setFormLoading = () => {
   return {
     type: FORM_LOADING
   };
+};
+
+// GET forms of the last year
+export const getForms = () => dispatch => {
+  dispatch(setFormLoading());
+  axios
+    .get("/api/forms")
+    .then(res => {
+      dispatch({
+        type: GET_FORMS,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err
+      })
+    );
 };
 
 // Get all Invoices

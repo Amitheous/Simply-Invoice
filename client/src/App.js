@@ -6,6 +6,8 @@ import store from "./store";
 
 import KeenTracking from "keen-tracking";
 
+// TODO: FIX THE FOOTER TO BE FIXED TO THE BOTTOM OF THE VIEWPORT AT MINIMUM
+
 import ProgressBar from "./components/layout/ProgressBar";
 import AppNavbar from "./components/layout/AppNavbar";
 import Landing from "./components/layout/Landing";
@@ -96,9 +98,21 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <PrivateRoute exact path="/profile" component={Profile} />
-                <PrivateRoute exact path="/clients" component={Clients} />
+                <PrivateRoute
+                  exact
+                  path="/dashboard"
+                  component={props => <Dashboard {...props} />}
+                />
+                <PrivateRoute
+                  exact
+                  path="/profile"
+                  component={props => <Profile {...props} />}
+                />
+                <PrivateRoute
+                  exact
+                  path="/clients"
+                  component={props => <Clients {...props} />}
+                />
                 <PrivateRoute
                   exact
                   path="/clients/create"

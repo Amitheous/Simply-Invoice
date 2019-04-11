@@ -1,5 +1,5 @@
 {
-  "name": "Simply-Invoice",
+  "name": "simply-invoice",
   "version": "0.9.0",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",

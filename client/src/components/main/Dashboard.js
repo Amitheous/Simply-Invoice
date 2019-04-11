@@ -12,8 +12,13 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { getRecentInvoices, getInvoice } from "../../actions/formActions";
-import { getRecentBills, getBill } from "../../actions/formActions";
+import {
+  getRecentInvoices,
+  getInvoice,
+  getRecentBills,
+  getBill,
+  getForms
+} from "../../actions/formActions";
 import { getProfile } from "../../actions/profileActions";
 import { RecentInvoiceItem } from "./dashboard/RecentInvoiceItem";
 import { RecentBillItem } from "./dashboard/RecentBillItem";
@@ -41,7 +46,6 @@ class Dashboard extends Component {
     let recentBillItems;
     let profileButton;
     let isLoading;
-    console.log(this.props);
     // Create Invoice Items
     if (invoices === null || loading) {
       isLoading = (
@@ -195,7 +199,10 @@ class Dashboard extends Component {
           </Row>
           <Row className="justify-content-center">
             <Card className="col-sm-10">
-              <CardTitle>Charts</CardTitle>
+              <CardTitle>
+                TODO: GET ALL FORMS(maybe for the last 12 months) AND PUT THAT
+                INFORMATION INTO DATASETS FOR DISPLAY
+              </CardTitle>
               <DoubleBar />
             </Card>
           </Row>

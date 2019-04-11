@@ -5,7 +5,8 @@ import {
   GET_BILLS,
   DELETE_BILL,
   FORM_LOADING,
-  DELETE_INVOICE
+  DELETE_INVOICE,
+  GET_FORMS
 } from "../actions/types";
 
 const initialState = {
@@ -13,11 +14,18 @@ const initialState = {
   invoices: null,
   bill: null,
   bills: null,
+  forms: null,
   loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case GET_FORMS:
+      return {
+        ...state,
+        forms: action.payload,
+        loading: false
+      };
     case FORM_LOADING:
       return {
         ...state,

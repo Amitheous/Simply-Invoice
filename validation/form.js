@@ -1,7 +1,7 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
-module.exports = function validateLoginInput(data) {
+module.exports = function validateFormInput(data) {
   let errors = {};
 
   data.formType = !isEmpty(data.formType) ? data.formType : "";

@@ -14,3 +14,4 @@ export const DELETE_BILL = "DELETE_BILL";
 export const GET_PROFILE = "GET_PROFILE";
 export const PROFILE_LOADING = "PROFILE_LOADING";
 export const FORM_LOADING = "FORM_LOADING";
+export const GET_FORMS = "GET_FORMS";

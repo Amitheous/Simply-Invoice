@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const moment = require("moment");
 const passport = require("passport");
 
 // Model
@@ -8,6 +9,31 @@ const Form = require("../../models/Form");
 
 // Validation
 const validateFormInput = require("../../validation/form");
+
+// @route   GET api/forms
+// @desc    Get all forms
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    afterDate = moment()
+      .subtract(11, "months")
+      .day(0)
+      .minute(0)
+      .second(0)
+      .hour(0)
+      .format();
+    Form.find(
+      { status: "paid", user: req.user.id, date: { $gte: afterDate } },
+      "datePaid total formType"
+    )
+      .sort({ date: -1 })
+      .exec(function(err, forms) {
+        if (err) res.json(err);
+        res.json(forms);
+      });
+  }
+);
 
 // @route   POST api/forms
 // @desc    Create new invoice/bill
@@ -183,11 +209,6 @@ router.post(
 
           let updatedData = {};
 
-          if (form.status === "unpaid" && req.body.status === "paid") {
-            const dateOfPay = Date.now().toISOString();
-            updatedData.datePaid = dateOfPay;
-          }
-
           if (req.body.title) updatedData.title = req.body.title;
           if (req.body.formType) updatedData.formType = req.body.formType;
           if (req.body.description)
@@ -205,18 +226,27 @@ router.post(
           if (req.body.subtotal) updatedData.subtotal = req.body.subtotal;
           if (req.body.total) updatedData.total = req.body.total;
 
-          updatedData._id = form._id;
-          updatedData.title = req.body.title ? req.body.title : form.title;
-          updatedData.user = req.user.id;
+          function checkPaid(oldStatus, newStatus) {
+            if (oldStatus === "unpaid" && newStatus === "paid") {
+              const date = String(moment.utc().format());
+              return date;
+            } else if (oldStatus === "paid" && newStatus === "unpaid") {
+              return null;
+            }
+          }
 
-          Form.findByIdAndUpdate(
-            req.params.id,
-            { $set: updatedData },
+          updatedData.datePaid = checkPaid(form.status, req.body.status);
+
+          Form.findOneAndUpdate(
+            { _id: req.params.id },
+            updatedData,
             { new: true },
             (err, doc) => {
               if (err) {
+                console.log(err);
                 res.json(err);
               }
+              console.log("AFTER UPDATE: " + doc);
               res.json(doc);
             }
           );
